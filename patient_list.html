@@ -130,65 +130,64 @@
         }
 
         function addPatient() {
-    const loggedInUser = localStorage.getItem("loggedInUser");
-    if (!loggedInUser) {
-        alert("กรุณาเข้าสู่ระบบก่อนเพิ่มผู้ป่วย");
-        window.location.href = "login.html"; // Redirect to login page
-        return;
-    }
+            const loggedInUser = localStorage.getItem("loggedInUser");
+            if (!loggedInUser) {
+                alert("กรุณาเข้าสู่ระบบก่อนเพิ่มผู้ป่วย");
+                window.location.href = "login.html";
+                return;
+            }
 
-    const firstName = document.getElementById("firstName").value.trim();
-    const lastName = document.getElementById("lastName").value.trim();
-    const patientCode = document.getElementById("patientCode").value.trim();
+            const firstName = document.getElementById("firstName").value.trim();
+            const lastName = document.getElementById("lastName").value.trim();
+            const patientCode = document.getElementById("patientCode").value.trim();
 
-    if (firstName && lastName && patientCode) {
-        const newPatient = { firstName, lastName, code: patientCode, user: loggedInUser, history: [] };
-        const storedPatients = JSON.parse(localStorage.getItem("patients")) || [];
-        storedPatients.push(newPatient);
-        localStorage.setItem("patients", JSON.stringify(storedPatients));
-        localStorage.setItem("currentPatient", JSON.stringify(newPatient));
-        window.location.href = "assessment.html";
-    } else {
-        alert("กรุณากรอกข้อมูลให้ครบถ้วน");
-    }
-}
+            if (firstName && lastName && patientCode) {
+                const newPatient = { firstName, lastName, code: patientCode, user: loggedInUser, history: [] };
+                const storedPatients = JSON.parse(localStorage.getItem("patients")) || [];
+                storedPatients.push(newPatient);
+                localStorage.setItem("patients", JSON.stringify(storedPatients));
+                localStorage.setItem("currentPatient", JSON.stringify(newPatient));
+                window.location.href = "assessment.html";
+            } else {
+                alert("กรุณากรอกข้อมูลให้ครบถ้วน");
+            }
+        }
 
+        function loadPatients() {
+            const loggedInUser = localStorage.getItem("loggedInUser");
+            const storedPatients = JSON.parse(localStorage.getItem("patients")) || [];
+            patients = storedPatients.filter(patient => patient.user === loggedInUser);
 
-function loadPatients() {
-    const loggedInUser = localStorage.getItem("loggedInUser");
-    const storedPatients = JSON.parse(localStorage.getItem("patients")) || [];
-    patients = storedPatients.filter(patient => patient.user === loggedInUser);
+            const patientListDiv = document.getElementById("patientList");
+            patientListDiv.innerHTML = "";
 
-    const patientListDiv = document.getElementById("patientList");
-    patientListDiv.innerHTML = "";
+            patients.forEach((patient, index) => {
+                const patientItem = document.createElement("div");
+                patientItem.classList.add("patient-item");
+                patientItem.innerHTML = `
+                    <span>${patient.code} - ${patient.firstName} ${patient.lastName}</span>
+                    <div>
+                        <button onclick="reEvaluatePatient(${index})">ประเมินอีกครั้ง</button>
+                        <button onclick="showAssessmentHistory('${patient.code}')">ประวัติการประเมิน</button>
+                    </div>
+                `;
+                patientListDiv.appendChild(patientItem);
 
-    patients.forEach((patient, index) => {
-        const patientItem = document.createElement("div");
-        patientItem.classList.add("patient-item");
-        patientItem.innerHTML = `
-            <span>${patient.code} - ${patient.firstName} ${patient.lastName}</span>
-            <div>
-                <button onclick="reEvaluatePatient(${index})">ประเมินอีกครั้ง</button>
-                <button onclick="showAssessmentHistory('${patient.code}')">ประวัติการประเมิน</button>
-            </div>
-        `;
-        patientListDiv.appendChild(patientItem);
-
-        const historyContainer = document.createElement("div");
-        historyContainer.classList.add("history-container");
-        historyContainer.id = `history-${patient.code}`;
-        patientListDiv.appendChild(historyContainer);
-    });
-}
-
+                const historyContainer = document.createElement("div");
+                historyContainer.classList.add("history-container");
+                historyContainer.id = `history-${patient.code}`;
+                patientListDiv.appendChild(historyContainer);
+            });
+        }
 
         function showAssessmentHistory(patientCode) {
-            const allHistoryContainers = document.querySelectorAll('.history-container');
-            allHistoryContainers.forEach(container => container.style.display = 'none');
-
-            const historyKey = `${patientCode}_history`;
+            const loggedInUser = localStorage.getItem("loggedInUser");
+            const historyKey = `${patientCode}_${loggedInUser}_history`; // Correct key
             const historyData = JSON.parse(localStorage.getItem(historyKey)) || [];
             const historyContainer = document.getElementById(`history-${patientCode}`);
+
+            const allHistoryContainers = document.querySelectorAll('.history-container');
+            allHistoryContainers.forEach(container => container.style.display = 'none');
 
             if (historyContainer.style.display === "block") {
                 historyContainer.style.display = "none";
