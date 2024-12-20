@@ -83,48 +83,25 @@
         </form>
     </div>
 
-    <!-- <script>
+    <script>
         function loginUser() {
             const usernameInput = document.getElementById("username").value;
             const passwordInput = document.getElementById("password").value;
             const errorMessage = document.getElementById("errorMessage");
-
-            // Retrieve stored data from localStorage
+    
             const storedUsername = localStorage.getItem("username");
             const storedPassword = localStorage.getItem("password");
-
-            // Validate input with stored credentials
+    
             if (usernameInput === storedUsername && passwordInput === storedPassword) {
-    alert("เข้าสู่ระบบสำเร็จ! ยินดีต้อนรับ " + usernameInput);
-    localStorage.setItem("loggedInUser", usernameInput); // Save logged-in user
-    window.location.href = "patient_list.html";
-} else {
-    errorMessage.style.display = "block";
-    errorMessage.innerText = "ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง";
-}
+                alert("เข้าสู่ระบบสำเร็จ! ยินดีต้อนรับ " + usernameInput);
+                localStorage.setItem("loggedInUser", usernameInput); // Save logged-in user
+                window.location.href = "patient_list.html";
+            } else {
+                errorMessage.style.display = "block";
+                errorMessage.innerText = "ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง";
+            }
         }
-
-    </script> -->
-
-<script>
-    function loginUser() {
-        const usernameInput = document.getElementById("username").value;
-        const passwordInput = document.getElementById("password").value;
-        const errorMessage = document.getElementById("errorMessage");
-
-        const storedUsername = localStorage.getItem("username");
-        const storedPassword = localStorage.getItem("password");
-
-        if (usernameInput === storedUsername && passwordInput === storedPassword) {
-            alert("เข้าสู่ระบบสำเร็จ! ยินดีต้อนรับ " + usernameInput);
-            localStorage.setItem("loggedInUser", usernameInput); // Save logged-in user
-            window.location.href = "patient_list.html";
-        } else {
-            errorMessage.style.display = "block";
-            errorMessage.innerText = "ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง";
-        }
-    }
-</script>
-
+    </script>
+    
 </body>
 </html>
