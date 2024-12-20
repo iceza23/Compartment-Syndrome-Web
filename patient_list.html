@@ -182,33 +182,47 @@ function loadPatients() {
 }
 
 
-        function showAssessmentHistory(patientCode) {
-            const allHistoryContainers = document.querySelectorAll('.history-container');
-            allHistoryContainers.forEach(container => container.style.display = 'none');
+function showAssessmentHistory(patientCode) {
+        // Hide all other history containers
+        const allHistoryContainers = document.querySelectorAll('.history-container');
+        allHistoryContainers.forEach(container => {
+            container.style.display = 'none';
+        });
 
-            const historyKey = `${patientCode}_history`;
-            const historyData = JSON.parse(localStorage.getItem(historyKey)) || [];
-            const historyContainer = document.getElementById(`history-${patientCode}`);
+        // Get the history container for this patient
+        const historyContainer = document.getElementById(`history-${patientCode}`);
 
-            if (historyContainer.style.display === "block") {
-                historyContainer.style.display = "none";
-                return;
-            }
-
-            historyContainer.innerHTML = ""; 
-            if (historyData.length > 0) {
-                historyData.forEach((entry, index) => {
-                    const entryDiv = document.createElement("div");
-                    entryDiv.classList.add("history-entry");
-                    entryDiv.innerHTML = `<p><strong>ครั้งที่ ${index + 1}:</strong> ${entry.date} - คะแนน: ${entry.totalScore}</p>`;
-                    historyContainer.appendChild(entryDiv);
-                });
-            } else {
-                historyContainer.innerHTML = "<p>ไม่มีประวัติการประเมิน</p>";
-            }
-
-            historyContainer.style.display = "block";
+        // If already visible, hide it
+        if (historyContainer.style.display === 'block') {
+            historyContainer.style.display = 'none';
+            return;
         }
+
+        // Fetch history data from localStorage
+        const historyKey = `${patientCode}_history`;
+        const historyData = JSON.parse(localStorage.getItem(historyKey)) || [];
+
+        // Clear and populate the history container
+        historyContainer.innerHTML = ''; // Clear previous content
+
+        if (historyData.length > 0) {
+            // Populate with history entries
+            historyData.forEach((entry, index) => {
+                const entryDiv = document.createElement('div');
+                entryDiv.classList.add('history-entry');
+                entryDiv.innerHTML = `
+                    <p><strong>ครั้งที่ ${index + 1}:</strong> ${entry.date} - คะแนน: ${entry.totalScore}</p>
+                `;
+                historyContainer.appendChild(entryDiv);
+            });
+        } else {
+            // Show message if no history is found
+            historyContainer.innerHTML = '<p>ไม่มีประวัติการประเมิน</p>';
+        }
+
+        // Show the container
+        historyContainer.style.display = 'block';
+    }
 
         function reEvaluatePatient(index) {
             const selectedPatient = patients[index];
