@@ -154,74 +154,67 @@
 }
 
 
-        function loadPatients() {
-            const loggedInUser = localStorage.getItem("loggedInUser");
-            const storedPatients = JSON.parse(localStorage.getItem("patients")) || [];
-            patients = storedPatients.filter(patient => patient.user === loggedInUser);
+function loadPatients() {
+    const loggedInUser = localStorage.getItem("loggedInUser");
+    const storedPatients = JSON.parse(localStorage.getItem("patients")) || [];
+    patients = storedPatients.filter(patient => patient.user === loggedInUser);
 
-            const patientListDiv = document.getElementById("patientList");
-            patientListDiv.innerHTML = "";
+    const patientListDiv = document.getElementById("patientList");
+    patientListDiv.innerHTML = "";
 
-            patients.forEach((patient, index) => {
-                const patientItem = document.createElement("div");
-                patientItem.classList.add("patient-item");
-                patientItem.innerHTML = `
-                    <span>${patient.code} - ${patient.firstName} ${patient.lastName}</span>
-                    <div>
-                        <button onclick="reEvaluatePatient(${index})">ประเมินอีกครั้ง</button>
-                        <button onclick="showAssessmentHistory('${patient.code}')">ประวัติการประเมิน</button>
-                    </div>
-                `;
-                patientListDiv.appendChild(patientItem);
+    patients.forEach((patient, index) => {
+        const patientItem = document.createElement("div");
+        patientItem.classList.add("patient-item");
+        patientItem.innerHTML = `
+            <span>${patient.code} - ${patient.firstName} ${patient.lastName}</span>
+            <div>
+                <button onclick="reEvaluatePatient(${index})">ประเมินอีกครั้ง</button>
+                <button onclick="showAssessmentHistory('${patient.code}')">ประวัติการประเมิน</button>
+            </div>
+        `;
+        patientListDiv.appendChild(patientItem);
 
-                const historyContainer = document.createElement("div");
-                historyContainer.classList.add("history-container");
-                historyContainer.id = `history-${patient.code}`;
-                patientListDiv.appendChild(historyContainer);
-            });
-        }
+        const historyContainer = document.createElement("div");
+        historyContainer.classList.add("history-container");
+        historyContainer.id = `history-${patient.code}`;
+        patientListDiv.appendChild(historyContainer);
+    });
+}
+
 
         function showAssessmentHistory(patientCode) {
-        // Hide all other history containers
-        const allHistoryContainers = document.querySelectorAll('.history-container');
-        allHistoryContainers.forEach(container => {
-            container.style.display = 'none';
-        });
+            const allHistoryContainers = document.querySelectorAll('.history-container');
+            allHistoryContainers.forEach(container => container.style.display = 'none');
 
-        // Get the history container for this patient
-        const historyContainer = document.getElementById(`history-${patientCode}`);
+            const historyKey = `${patientCode}_history`;
+            const historyData = JSON.parse(localStorage.getItem(historyKey)) || [];
+            const historyContainer = document.getElementById(`history-${patientCode}`);
 
-        // If already visible, hide it
-        if (historyContainer.style.display === 'block') {
-            historyContainer.style.display = 'none';
-            return;
+            if (historyContainer.style.display === "block") {
+                historyContainer.style.display = "none";
+                return;
+            }
+
+            historyContainer.innerHTML = ""; 
+            if (historyData.length > 0) {
+                historyData.forEach((entry, index) => {
+                    const entryDiv = document.createElement("div");
+                    entryDiv.classList.add("history-entry");
+                    entryDiv.innerHTML = `<p><strong>ครั้งที่ ${index + 1}:</strong> ${entry.date} - คะแนน: ${entry.totalScore}</p>`;
+                    historyContainer.appendChild(entryDiv);
+                });
+            } else {
+                historyContainer.innerHTML = "<p>ไม่มีประวัติการประเมิน</p>";
+            }
+
+            historyContainer.style.display = "block";
         }
 
-        // Fetch history data from localStorage
-        const historyKey = `${patientCode}_history`;
-        const historyData = JSON.parse(localStorage.getItem(historyKey)) || [];
-
-        // Clear and populate the history container
-        historyContainer.innerHTML = ''; // Clear previous content
-
-        if (historyData.length > 0) {
-            // Populate with history entries
-            historyData.forEach((entry, index) => {
-                const entryDiv = document.createElement('div');
-                entryDiv.classList.add('history-entry');
-                entryDiv.innerHTML = `
-                    <p><strong>ครั้งที่ ${index + 1}:</strong> ${entry.date} - คะแนน: ${entry.totalScore}</p>
-                `;
-                historyContainer.appendChild(entryDiv);
-            });
-        } else {
-            // Show message if no history is found
-            historyContainer.innerHTML = '<p>ไม่มีประวัติการประเมิน</p>';
+        function reEvaluatePatient(index) {
+            const selectedPatient = patients[index];
+            localStorage.setItem("currentPatient", JSON.stringify(selectedPatient));
+            window.location.href = "assessment.html";
         }
-
-        // Show the container
-        historyContainer.style.display = 'block';
-    }
     </script>
 </body>
 </html>
