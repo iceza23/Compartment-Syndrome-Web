@@ -129,7 +129,30 @@
             form.style.display = form.style.display === "none" || form.style.display === "" ? "block" : "none";
         }
 
-        function addPatient() {
+//         function addPatient() {
+//     const loggedInUser = localStorage.getItem("loggedInUser");
+//     if (!loggedInUser) {
+//         alert("กรุณาเข้าสู่ระบบก่อนเพิ่มผู้ป่วย");
+//         window.location.href = "login.html"; // Redirect to login page
+//         return;
+//     }
+
+//     const firstName = document.getElementById("firstName").value.trim();
+//     const lastName = document.getElementById("lastName").value.trim();
+//     const patientCode = document.getElementById("patientCode").value.trim();
+
+//     if (firstName && lastName && patientCode) {
+//         const newPatient = { firstName, lastName, code: patientCode, user: loggedInUser, history: [] };
+//         const storedPatients = JSON.parse(localStorage.getItem("patients")) || [];
+//         storedPatients.push(newPatient);
+//         localStorage.setItem("patients", JSON.stringify(storedPatients));
+//         localStorage.setItem("currentPatient", JSON.stringify(newPatient));
+//         window.location.href = "assessment.html";
+//     } else {
+//         alert("กรุณากรอกข้อมูลให้ครบถ้วน");
+//     }
+// }
+function addPatient() {
     const loggedInUser = localStorage.getItem("loggedInUser");
     if (!loggedInUser) {
         alert("กรุณาเข้าสู่ระบบก่อนเพิ่มผู้ป่วย");
@@ -152,6 +175,7 @@
         alert("กรุณากรอกข้อมูลให้ครบถ้วน");
     }
 }
+
 
 
 function loadPatients() {
