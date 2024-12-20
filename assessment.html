@@ -150,10 +150,11 @@
 <body>
     <script>
         // ตรวจสอบว่าผู้ใช้เข้าสู่ระบบหรือไม่
-        if (localStorage.getItem('isLoggedIn') !== 'true') {
-            alert('กรุณาเข้าสู่ระบบก่อนเข้าหน้านี้');
-            window.location.href = 'login.html'; // Redirect to login page
-        }
+        if (!localStorage.getItem('loggedInUser')) {
+    alert('กรุณาเข้าสู่ระบบก่อนเข้าหน้านี้');
+    window.location.href = 'login.html'; // Redirect to login page
+}
+
     </script>    
 
     <!-- ส่วนหัว (Header) -->

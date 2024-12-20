@@ -97,12 +97,14 @@
             if (usernameInput === storedUsername && passwordInput === storedPassword) {
     alert("เข้าสู่ระบบสำเร็จ! ยินดีต้อนรับ " + usernameInput);
     localStorage.setItem("loggedInUser", usernameInput); // Save logged-in user
+    localStorage.setItem("isLoggedIn", "true"); // Mark as logged in
     window.location.href = "patient_list.html";
 } else {
     errorMessage.style.display = "block";
     errorMessage.innerText = "ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง";
 }
         }
+
 
     </script>
 </body>
