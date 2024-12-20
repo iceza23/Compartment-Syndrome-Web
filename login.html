@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>เข้าสู่ระบบ</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #cdebf9, #e6f7ff);
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 400px;
+            margin: 50px auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            text-align: center;
+            color: #007BFF;
+        }
+
+        label {
+            display: block;
+            margin: 10px 0 5px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.1em;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        .error-message {
+            color: red;
+            font-size: 0.9em;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>เข้าสู่ระบบ</h1>
+        <form id="loginForm">
+            <label for="username">ชื่อผู้ใช้</label>
+            <input type="text" id="username" placeholder="กรอกชื่อผู้ใช้" required>
+
+            <label for="password">รหัสผ่าน</label>
+            <input type="password" id="password" placeholder="กรอกรหัสผ่าน" required>
+
+            <div id="errorMessage" class="error-message" style="display: none;"></div>
+
+            <button type="button" onclick="loginUser()">เข้าสู่ระบบ</button>
+        </form>
+    </div>
+
+    <script>
+        function loginUser() {
+            const usernameInput = document.getElementById("username").value;
+            const passwordInput = document.getElementById("password").value;
+            const errorMessage = document.getElementById("errorMessage");
+
+            // Retrieve stored data from localStorage
+            const storedUsername = localStorage.getItem("username");
+            const storedPassword = localStorage.getItem("password");
+
+            // Validate input with stored credentials
+            if (usernameInput === storedUsername && passwordInput === storedPassword) {
+    alert("เข้าสู่ระบบสำเร็จ! ยินดีต้อนรับ " + usernameInput);
+    localStorage.setItem("loggedInUser", usernameInput); // Save logged-in user
+    window.location.href = "patient_list.html";
+} else {
+    errorMessage.style.display = "block";
+    errorMessage.innerText = "ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง";
+}
+        }
+
+    </script>
+</body>
+</html>
