@@ -161,32 +161,33 @@
 
 
 
-        function loadPatients() {
-            const loggedInUser = localStorage.getItem("loggedInUser");
-            const storedPatients = JSON.parse(localStorage.getItem("patients")) || [];
-            patients = storedPatients.filter(patient => patient.user === loggedInUser);
+function loadPatients() {
+    const loggedInUser = localStorage.getItem("loggedInUser");
+    const storedPatients = JSON.parse(localStorage.getItem("patients")) || [];
+    patients = storedPatients.filter(patient => patient.user === loggedInUser);
 
-            const patientListDiv = document.getElementById("patientList");
-            patientListDiv.innerHTML = "";
+    const patientListDiv = document.getElementById("patientList");
+    patientListDiv.innerHTML = "";
 
-            patients.forEach((patient, index) => {
-                const patientItem = document.createElement("div");
-                patientItem.classList.add("patient-item");
-                patientItem.innerHTML = `
-                    <span>${patient.code} - ${patient.firstName} ${patient.lastName}</span>
-                    <div>
-                        <button onclick="reEvaluatePatient(${index})">ประเมินอีกครั้ง</button>
-                        <button onclick="showAssessmentHistory('${patient.code}')">ประวัติการประเมิน</button>
-                    </div>
-                `;
-                patientListDiv.appendChild(patientItem);
+    patients.forEach((patient, index) => {
+        const patientItem = document.createElement("div");
+        patientItem.classList.add("patient-item");
+        patientItem.innerHTML = `
+            <span>${patient.code} - ${patient.firstName} ${patient.lastName}</span>
+            <div>
+                <button onclick="reEvaluatePatient(${index})">ประเมินอีกครั้ง</button>
+                <button onclick="showAssessmentHistory('${patient.code}')">ประวัติการประเมิน</button>
+            </div>
+        `;
+        patientListDiv.appendChild(patientItem);
 
-                const historyContainer = document.createElement("div");
-                historyContainer.classList.add("history-container");
-                historyContainer.id = `history-${patient.code}`;
-                patientListDiv.appendChild(historyContainer);
-            });
-        }
+        const historyContainer = document.createElement("div");
+        historyContainer.classList.add("history-container");
+        historyContainer.id = `history-${patient.code}`;
+        patientListDiv.appendChild(historyContainer);
+    });
+}
+
 
         function showAssessmentHistory(patientCode) {
             const loggedInUser = localStorage.getItem("loggedInUser");
