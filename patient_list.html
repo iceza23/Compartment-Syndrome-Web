@@ -101,18 +101,23 @@
             <h3>เพิ่มข้อมูลผู้ป่วย</h3>
             <label for="firstName">ชื่อจริง</label>
             <input type="text" id="firstName" placeholder="กรอกชื่อจริง" required>
-
+        
             <label for="lastName">นามสกุล</label>
             <input type="text" id="lastName" placeholder="กรอกนามสกุล" required>
-
+        
             <label for="patientCode">รหัสผู้ป่วย</label>
-            <input type="text" id="patientCode" placeholder="กรอกรหัสผู้ป่วย" required>
-
+            <div style="display: flex; align-items: center;">
+                <span style="margin-right: 5px; font-weight: bold;">HN</span>
+                <input type="text" id="patientCode" placeholder="กรอกหมายเลข (XXXX)" required style="flex: 1;">
+            </div>
+        
             <button class="patient-btn" onclick="addPatient()">สร้างและไปที่การประเมิน</button>
         </div>
+        
 
         <div id="patientList"></div>
     </div>
+    
 
     <script>
         let patients = [];
@@ -153,6 +158,7 @@
         alert("กรุณากรอกข้อมูลให้ครบถ้วน");
     }
 }
+
 
 
         function loadPatients() {
