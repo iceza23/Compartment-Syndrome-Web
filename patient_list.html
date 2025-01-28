@@ -150,23 +150,14 @@
         return;
     }
 
-<<<<<<< HEAD
-    const firstName = document.getElementById("firstName").value.trim();
-    const lastName = document.getElementById("lastName").value.trim();
-=======
     // const firstName = document.getElementById("firstName").value.trim();
     // const lastName = document.getElementById("lastName").value.trim();
->>>>>>> ac1c827 (Initial commit)
     const patientCodePart = document.getElementById("patientCode").value.trim();
     const patientCode = `HN ${patientCodePart}`;
 
     if (firstName && lastName && patientCodePart) {
-<<<<<<< HEAD
-        const newPatient = { firstName, lastName, code: patientCode, user: loggedInUser, history: [] };
-=======
         // const newPatient = { firstName, lastName, code: patientCode, user: loggedInUser, history: [] };
         const newPatient = { code: patientCode, user: loggedInUser, history: [] };
->>>>>>> ac1c827 (Initial commit)
         const storedPatients = JSON.parse(localStorage.getItem("patients")) || [];
         storedPatients.push(newPatient);
         localStorage.setItem("patients", JSON.stringify(storedPatients));
@@ -191,12 +182,8 @@ function loadPatients() {
         const patientItem = document.createElement("div");
         patientItem.classList.add("patient-item");
         patientItem.innerHTML = `
-<<<<<<< HEAD
-            <span>${patient.code} - ${patient.firstName} ${patient.lastName}</span>
-=======
             
             <span>${patient.code}</span>
->>>>>>> ac1c827 (Initial commit)
             <div>
                 <button onclick="reEvaluatePatient(${index})">ประเมินอีกครั้ง</button>
                 <button onclick="showAssessmentHistory('${patient.code}')">ประวัติการประเมิน</button>
