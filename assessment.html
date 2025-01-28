@@ -273,10 +273,17 @@
                 resultText = "ผลการประเมิน: ปกติ";
                 imageUrl = "images/1.png";
             } else if (totalScore <= 7) {
+<<<<<<< HEAD
                 resultText = "ผลการประเมิน: Mild Monitoring (แจ้งแพทย์)";
                 imageUrl = "images/2.png";
             } else if (totalScore <= 14) {
                 resultText = "ผลการประเมิน: Moderate Monitoring (แจ้งแพทย์)";
+=======
+                resultText = "ผลการประเมิน: Mild Monitoring (แจ้งแพทย์) <br> ควรเฝ้าระวังและประเมินซ้ำทุก 4 ชั่วโมง ใน 24-48 ชั่วโมงแรก";
+                imageUrl = "images/2.png";
+            } else if (totalScore <= 14) {
+                resultText = "ผลการประเมิน: Moderate Monitoring (แจ้งแพทย์) <br> ควรเฝ้าระวังและประเมินซ้ำทุก 2 ชั่วโมง ใน 24-48 ชั่วโมงแรก";
+>>>>>>> ac1c827 (Initial commit)
                 imageUrl = "images/3.png";
             } else {
                 resultText = "ผลการประเมิน: Severe Monitoring (แจ้งแพทย์ทันที!)";
